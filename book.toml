@@ -4,3 +4,11 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Gnuplot Port For Matplotlib"
+
+[output.html]
+mathjax-support = true
+git-repository-url = "https://github.com/ChenZhongPu/gnuplot"
+
+[output.html.playground]
+editable = true
+line-numbers = true

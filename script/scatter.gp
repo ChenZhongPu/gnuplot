@@ -1,5 +1,6 @@
 unset key
-set size ratio 0.5
+set view map scale 2.7/5
+set size ratio 2.7/5
 set xlabel 'entry a'
 set ylabel 'entry b'
 set xrange [-5:55]
