@@ -1,0 +1,6 @@
+[book]
+authors = ["CHEN zhongpu"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Gnuplot Port For Matplotlib"
