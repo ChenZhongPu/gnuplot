@@ -1,3 +1,5 @@
+The online book can be read from [Gnuplot Port For Matplotlib](https://chenzhongpu.github.io/gnuplot/intro.html).
+
 > In the Unix tradition, gnuplot is a simple tool, doing (mostly) one thing, and doing it very, very well.
 
 In this book, I would like to *reinvent the wheels* by reintroducing the tutorial of [Matplotlib](https://matplotlib.org/). 
