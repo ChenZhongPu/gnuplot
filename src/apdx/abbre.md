@@ -9,6 +9,8 @@
 | lc | linecolor |
 | fs | fillstyle |
 | fc | fillcolor |
+| ps | pointsize |
+| lw | linewidth |
 | w l | with lines |
 | w linesp/lp | with linespoints |
 | w p | with points |

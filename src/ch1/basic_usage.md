@@ -30,7 +30,7 @@ plot $data with lines
 
 ![simple_example](img/simple_example.svg)
 
-As you can see, the default *style* of gnuplot is different from that of matplotlib. For example,
+As you can see, the default *style* of gnuplot is different from that of Matplotlib. For example,
 
 - The line is thinner.
 - The font of labels on axes is smaller.
@@ -72,7 +72,7 @@ set xrange [-5:55]
 plot '../data/scatter.dat' using 1:4:($3/30.0):2 \
 with points pt 22 ps variable lc variable
 ```
-Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30.
+Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30. And we can add a backslash (`\`) to write the command in multiple lines.
 
 <img src="img/scatter.svg" width="80%" alt="scatter">
 
@@ -110,6 +110,24 @@ The final code (`script/simple_plot.pg`) would generate a figure like the follow
 Wow, a ton of code is required to make the figure look pretty! The good news is that writing the scripts in gnuplot is like building with blocks, and everything here is straightforward; the bad news is that some default styles are a little annoying, and we have to *set* them manually.
 
 From now on, I will not apply the trick to make extra space in the X axis, because in my opinion, this is just an implementation choice.
+
+### Functions and styles
+Gnuplot is *NOT* a programming language, so you cannot make a *helper* function to lessen your repeated workload. Fortunately, gnuplot has several features which can simplify the script. On the other hand, gnuplot offers mathematical style function definitions. For example, we can define a Gauss function in gnuplot:
+
+```
+gauss(x) = exp(-pi*x*x)
+```
+, where `exp` is the built-in logarithmic function and `pi` is the built-in constant for π.
+
+On the other hand, gnuplot can levitate our labors by *setting styles*. For example, suppose the plots for \\( x \\) and \\( x^2 \\) has the same style, then we can define a common style for them:
+
+```
+set style line 1 dt 2 lw 4 lc rgbcolor 'blue'
+plot x ls 1,x**2 ls 1
+```
+
+The detail of the usage of *styles* can be found at [Styling Artists](#styling-artists).
+
 ## Styling Artists
 In the plot below we manually set the *linecolor*, *linewidth*, and *linetype* of a line.
 
@@ -144,6 +162,45 @@ set style fill solid border lc 'black'
 plot '../data/artists_data.dat' using 1:2 with circles fc "greenyellow"
 ```
 
-<img src="img/colors.svg" alt="test" width="80%">
+<img src="img/colors.svg" alt="colors" width="80%">
 
 The first line is to set the *fill style*, and 0.6 is the degree of transparency. Note that, `fc`, short for *fillcolor* only accepts a *colorspec*, and we cannot pass a plain number to it. You can check all color names by `show colornames` command.
+
+### Linewidths, linestyles, and pointsizes
+The line width and point size are multipliers for the current terminal's default width and size, so you'd better check the styles by invoking the `test` command. By the way, the concept of `MarkerStyle` in Matplotlib is called *pointtype* (the abbreviation form is `pt`) in gnuplot. For example, `pt 5` is a filled square.
+
+```
+plot '../data/artists_data.dat' using 1 with points pt 5 ps 2 lc 7 t 'data 1', \
+'' using 2 with points pt 11 ps 2 t 'data 2'
+```
+
+<img src="img/marker.svg" alt="marker" width="80%">
+
+> There is no *pointcolor* in gnuplot! In order to set the color a point, you can use the `lc` (short for *linecolor*).
+
+## Axis scales and ticks
+Each Axes has two (or three) axis representing the x- and y-axis. These control the scale of the axis, the tick locators and the tick formatters.
+
+### Scale
+In addition to the linear scale, gnuplot supplies non-linear scales, such as a log-scale. Here we set the scale manually:
+
+```
+set multiplot layout 1,2
+unset key
+f(x) = 10**x
+unset logscale y
+plot '../data/artists_data.dat' using (f($2)) with lines
+set logscale y
+plot '../data/artists_data.dat' using (f($2)) with lines
+```
+
+<img src="img/scale.svg" alt="scale" width="70%">
+
+The first line is to set a multiplot mode with 1 row and 2 columns. Some readers may be not satisfied with formatting of labels in `log-scale`, and prefer the \( 10^i \) format. To achieve this, we can specify the format as *log*:
+
+```
+set format y "10^{%L}"
+```
+The complete code can be found at `script/scales.gp`.
+
+<img src="img/scale2.svg" alt="scale2" width="70%">
