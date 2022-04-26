@@ -61,7 +61,7 @@ To plot the scatter figure as shown [here](https://matplotlib.org/stable/tutoria
 3	20	1.665814	-11.207766
 ```
 
-And the following code (`scatter.gp`) can output the similar plot:
+Those lines started with `#` are *comments* in gnuplot, and they are ignored in the input data and script file. And the following code (`scatter.gp`) can output the similar plot:
 
 ```
 unset key
@@ -69,10 +69,13 @@ set xlabel 'entry a'
 set ylabel 'entry b'
 set xrange [-5:55]
 
-plot '../data/scatter.dat' using 1:4:($3/30.0):2 \
+plot 'scatter.dat' using 1:4:($3/30.0):2 \
 with points pt 22 ps variable lc variable
 ```
-Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30. And we can add a backslash (`\`) to write the command in multiple lines.
+Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30. And we can add a backslash (`\`) to write the command in multiple lines. When using the keywords `pt` (short for *pointtype*), `ps` (short for *pointsize*), or `lc` (short for linecolor) in a plot
+ command, the additional keyword `variable` may be given instead of a number.
+ In this case the corresponding properties of each point are assigned by
+ additional columns of input data.
 
 <img src="img/scatter.svg" width="80%" alt="scatter">
 
@@ -103,7 +106,7 @@ Because gnuplot always plots according to `xrange` if possible, we have to use a
 f(x) = (x < 0 || x > 2 ? 1/0 : x)
 ```
 
-The final code (`script/simple_plot.pg`) would generate a figure like the following:
+The final code (`simple_plot.pg`) would generate a figure like the following:
 
 <img src="img/simple_plot2.svg" alt="final simple plot">
 
@@ -388,5 +391,4 @@ plot f(x) w lines axis x1y1 lw 2
 
 <img src="img/x_axis.svg" alt="x_axis" width="80%">
 
-Note that the `set link` command is introduced by gnuplot 5.0, which is used to  establish a mapping between the x and x2 axes, or the
- y and y2 axes.
+Note that the `set link` command is introduced by gnuplot 5.0, which is used to establish a mapping between the x and x2 axes, or the y and y2 axes.
