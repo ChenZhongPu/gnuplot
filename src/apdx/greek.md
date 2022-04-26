@@ -1,6 +1,6 @@
 # Greek Letters
 
-You can use `{\Symbol <Alphabet>}` to display Greek letters. For example `{\Symbol a}` is for \\(\alpha\\).
+You can use `{/Symbol <Alphabet>}` to display Greek letters. For example `{/Symbol a}` is for \\(\alpha\\).
 
 ## Upper case
 

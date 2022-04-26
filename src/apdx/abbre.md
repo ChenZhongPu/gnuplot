@@ -11,6 +11,7 @@
 | fc | fillcolor |
 | ps | pointsize |
 | lw | linewidth |
+| term | terminal |
 | w l | with lines |
 | w linesp/lp | with linespoints |
 | w p | with points |

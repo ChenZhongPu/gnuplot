@@ -2,11 +2,11 @@
 
 This article is adapted from [Basic Usage](https://matplotlib.org/stable/tutorials/introductory/usage.html).
 
+> All scripts in this article can be found `script/basic_usage`.
+
 This tutorial covers some basic usage patterns and best practices to help you get started with gnuplot.
 
-Once gnuplot is installed, you can use it in either interactive or batch mode. As for the interactive, it can usually be invoked by issuing the `gnuplot` command at the shell prompt.
-
-Once launched, gnuplot displays a welcome message and then replaces the shell prompt with a `gnuplot>` prompt. Anything entered at this prompt is interpreted as gnuplot commands until you issue an `exit` or `quit` command,
+Once gnuplot is installed, you can use it in either interactive or batch mode. As for the interactive, it can usually be invoked by issuing the `gnuplot` command at the shell prompt. Once launched, gnuplot displays a welcome message and then replaces the shell prompt with a `gnuplot>` prompt. Anything entered at this prompt is interpreted as gnuplot commands until you issue an `exit` or `quit` command,
 
 Also, the scripts for plotting can be stored in a plain text file (usually suffixed with `.gp`), and it can be executed by 
 
@@ -44,7 +44,7 @@ Here are the components of a gnuplot Figure.
 
 ![Anatomy of a figure](img/anatomy.svg)
 
-The code for above can be found at `scripts/anatomy.gp`.
+The code for above can be found at `anatomy.gp`.
 
 ## Types of inputs to plotting functions
 Plotting command (`plot`) expects a file or a mathematical function as the input. For example, the `plot sin(x)` is able to output a figure of *sin* whose default range of *x* is from -10 to 10. In practice, the input data is usually stored in a file.
@@ -61,7 +61,7 @@ To plot the scatter figure as shown [here](https://matplotlib.org/stable/tutoria
 3	20	1.665814	-11.207766
 ```
 
-And the following code (`script/scatter.gp`) can output the similar plot:
+And the following code (`scatter.gp`) can output the similar plot:
 
 ```
 unset key
@@ -138,7 +138,7 @@ The data (`data/artists_data.data`) consists of two columns random numbers.
 ```
 set style line 1 dt 2 lw 4 lc rgbcolor 'blue'
 set style line 2 dt 4 lw 2 lc rgbcolor 'orange'
-plot '../data/artists_data.dat' using 1 smooth cumulative ls 1, \
+plot 'artists_data.dat' using 1 smooth cumulative ls 1, \
 '' using 2 smooth cumulative ls 2
 ```
 
@@ -199,19 +199,55 @@ unset key
 set xrange [55:175]
 set grid
 set style fill solid 0.75
-plot '../data/normal.dat' using 1 bins=50 with boxes fc '#4070a0'
+plot 'normal.dat' using 1 bins=50 with boxes fc '#4070a0'
 ```
 
 <img src="img/labels.svg" alt="labels" width="80%">
 
-The complete code can be found at `script/labels.gp`. Note that you have to use double quotes for the escape character `\n`. The basic syntax of `set label` is: 
+The complete code can be found at `labels.gp`. Note that you have to use double quotes for the escape character `\n`. The basic syntax of `set label` is: 
 
 ```
 set label {<tag>} {"<label text>"} {at <position>}
 ```
-Here, the `position` is the location of X and Y in the plot. To display the mathematical symbols, we use the special `{\Symbol}` font, where `m`, short for Greek letter `mu`, is \\(\mu\\), and `s`, short for Greek letter `sigma`, is \\(\sigma\\). Readers can refer to [Greek Letters](../apdx/greek.md) for a complete list.
+Here, the `position` is the location of X and Y on the plot in terms of the coordinates. To display the mathematical symbols, we use the special `{/Symbol}` font, where `m`, short for Greek letter `mu`, is \\(\mu\\), and `s`, short for Greek letter `sigma`, is \\(\sigma\\). Readers can refer to [Greek Letters](../apdx/greek.md) for a complete list.
 
-> The `{\Symbol}` also supports simple mathematical notations, such as the subscript. For example `x^2` means \\(x^2\\). However, it would be troublesome to write complex mathematical equations with `{\Symbol}`, and instead you should take the leverage of *Latex*. Readers can refer to [How to write complex mathematical equations](../cook/1_30.md).
+We can further customize other properties such as *text size* and *text color*. For example, we use `font ",15"` to specify the size of font to 15 for the terminal.
+
+### Using mathematical expressions in text
+
+The `{/Symbol}` also supports simple mathematical notations, such as the subscript. For example `x^2` means \\(x^2\\), `{/Symbol s}_2` means \\(\sigma_{2}\\). However, it would be troublesome to write complex mathematical equations with `{/Symbol}`, and instead you should take the leverage of *Latex*. Readers can refer to [How to write complex mathematical equations](../cook/1_30.md).
+
+### Annotations
+We can also annotate points on a plot by using setting *arrow* and *label*:
+
+```
+f(x) = cos(2*pi*x)
+unset key
+set xrange [0:5]
+set yrange [-2:2]
+set samples 1000
+set arrow from 2.3,1.3 to 2,1 filled
+set label 'local max' at 2.3,1.3
+plot f(x)
+```
+
+<img src="img/annotation.svg" alt="annotation" width="80%">
+
+The basic usage an *arrow* is `set arrow from <position> to <position>`, and gnuplot offers a large amount of options to customize its styles, such as its head, fill style, and border. For example, as for the fill style, you can use one from `filled | empty | nofilled | noborder`. Like the *label*, `position` here means the X,Y coordinate on the plot.
+
+> Like many other Linux tools, gnuplot is shipped with a detailed documentation, and users can invoke `help <command>` to ask for help. For example, you can access gnuplot’s built-in reference documentation about how to set arrow by typing `help set arrow`.
+
+### Keys
+The concept *legend* in Matplotlib is called *key* in gnuplot.
+
+```
+plot 'artists_data.dat' using 1 with lines t 'data1', \
+'' using 2 with lines t 'data2'
+```
+
+<img src="img/key.svg" alt="key" width="80%">
+
+The keys are specified by `t` (short for *title*). Keys in gnuplot are quite flexible in layout and placement.
 
 ## Axis scales and ticks
 Each Axes has two (or three) axis representing the x- and y-axis. These control the scale of the axis, the tick locators and the tick formatters.
@@ -224,9 +260,9 @@ set multiplot layout 1,2
 unset key
 f(x) = 10**x
 unset logscale y
-plot '../data/artists_data.dat' using (f($2)) with lines
+plot 'artists_data.dat' using (f($2)) with lines
 set logscale y
-plot '../data/artists_data.dat' using (f($2)) with lines
+plot 'artists_data.dat' using (f($2)) with lines
 ```
 
 <img src="img/scale.svg" alt="scale" width="70%">
@@ -236,7 +272,7 @@ The first line is to set a multiplot mode with 1 row and 2 columns. Some readers
 ```
 set format y "10^{%L}"
 ```
-The complete code can be found at `script/scales.gp`.
+The complete code can be found at `scales.gp`.
 
 <img src="img/scale2.svg" alt="scale2" width="70%">
 
@@ -250,12 +286,12 @@ set multiplot layout 2,1
 unset key
 
 set title 'Automatic ticks'
-plot '../data/artists_data.dat' using 2 with lines
+plot 'artists_data.dat' using 2 with lines
 
 set title 'Manual ticks'
 set ytics -1.5,1.5,1.5
 set xtics ("zero" 0, "30" 30, "sixty" 60, "90" 90)
-plot '../data/artists_data.dat' using 2 with lines
+plot 'artists_data.dat' using 2 with lines
 ```
 
 <img src="img/ticks.svg" alt="ticks" width="80%">
@@ -269,7 +305,6 @@ set xtics ({"<label>"} <pos> {<level>} {,{"<label>"}...)
 
 So `set ytics -1.5,1.5,1.5` means the tic starts from -1.5, and ends to 1.5, and the step is 1.5 (always positive). As for the second usage, the default level is 0, indicting the major tick, and level 1 means the minor tick. So `"zero" 0` means to display *zero* at position 0.
 
-> Like many other Linux tools, gnuplot is shipped with a detailed documentation, and users can invoke `help <command>` to ask for help. For example, you can access gnuplot’s built-in reference documentation about how to set tics on X by typing `help set xtics`.
 
 ### Plotting dates and strings
 Gnuplot can handle plotting arrays of dates and arrays of strings, as well as floating point numbers. These get special locators and formatters as appropriate. 
@@ -290,7 +325,7 @@ unset key
 set xdata time
 set timefmt "%Y-%m-%d %H:%M:%S"
 set xtics format "%m-%d"
-plot "../data/date.dat" u 1:3 w lines lw 1.5
+plot "date.dat" u 1:3 w lines lw 1.5
 ```
 
 <img src="img/date.svg" alt="date" width="80%">
@@ -315,7 +350,7 @@ set ytics 0,0.1,0.6
 set xrange [-1:4]
 set style fill solid 0.5
 set boxwidth 0.8
-plot "../data/strings.dat" using 2:xticlabels(1) with boxes
+plot "strings.dat" using 2:xticlabels(1) with boxes
 ```
 
 <img src="img/strings.svg" alt="strings" width="80%">
@@ -327,3 +362,31 @@ As for a 2D *box* plotting, only one dimension is required, and we can use an ex
 ## Additional Axis objects
 Plotting data of different magnitude in one chart may require an additional y-axis. As for a 2D figure in gnuplot, we are, in fact, plotting on *X1* (bottom) and *Y1* (left). The mirror of X1 is *X2*, which is located on the top, and the mirror of Y1 is *Y2*, which is located on the right side. Therefore, each axis can have a different scale and tick format in gnuplot.
 
+```
+f1(x) = 500 * x
+f2(x) = cos(2 * pi * x)
+set xrange [0:5]
+set samples 1200
+plot f2(x) w lines axis x1y1 lw 2 t 'Sine(left)', f1(x) w lines axis x1y2 lw 2 t 'Staight(right)'
+```
+
+<img src="img/y_axis.svg" alt="y_axis" width="80%">
+
+Here `axis x1y1` means plotting on X1 and Y1, while `axis x1y2` means plotting on X1 and Y2. And we can also set the ticks labels on X2 via `set x2label`:
+
+```
+f(x) = cos(2 * pi * x)
+set link x2 via x*180/pi inverse x*pi/180
+set x2tics 0,50,300
+set xtics nomirror
+set xrange [0:5]
+set samples 1200
+set xlabel 'Angle [°]'
+set x2label 'Angle [rad]'
+plot f(x) w lines axis x1y1 lw 2
+```
+
+<img src="img/x_axis.svg" alt="x_axis" width="80%">
+
+Note that the `set link` command is introduced by gnuplot 5.0, which is used to  establish a mapping between the x and x2 axes, or the
+ y and y2 axes.
