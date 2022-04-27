@@ -1,5 +1,5 @@
 # Summary
-- [Introduction](./intro.md)
+[Introduction](./intro.md)
 - [Introductory](ch1/README.md)
     - [Basic Usage](ch1/basic_usage.md)
 - [Cookbook](cook/README.md)
