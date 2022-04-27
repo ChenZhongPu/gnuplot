@@ -448,7 +448,7 @@ plot '../../data/z.txt' matrix with image, '../../data/cont.dat' with lines lw 1
 Here, we use the default palette in gnuplot, and you can check how it looks like by invoking `test palette` command.
 
 ## Working with multiple Figures and Axes
-We have shown the usage of `set multiplot layout`, and we provide one more example (`multi.pg`):
+We have shown the usage of `set multiplot layout`, and we provide one more example (`multi.pg`), which is from [gnuplot demo script: layout.dem](http://gnuplot.sourceforge.net/demo/layout.html):
 
 <img src="img/multi.svg" alt="multi" width="80%">
 
