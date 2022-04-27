@@ -8,3 +8,5 @@
     - [Common Abbreviations](apdx/abbre.md)
     - [Time Format](apdx/time_format.md)
     - [Greek Letters](apdx/greek.md)
+    - [3D Data](apdx/3d.md)
+    - [Palettes](apdx/palette.md)
