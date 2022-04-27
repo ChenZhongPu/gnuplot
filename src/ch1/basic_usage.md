@@ -392,3 +392,6 @@ plot f(x) w lines axis x1y1 lw 2
 <img src="img/x_axis.svg" alt="x_axis" width="80%">
 
 Note that the `set link` command is introduced by gnuplot 5.0, which is used to establish a mapping between the x and x2 axes, or the y and y2 axes.
+
+## Color mapped data
+Often we would like a color map. Gnuplot has a number of plot types that do this:
