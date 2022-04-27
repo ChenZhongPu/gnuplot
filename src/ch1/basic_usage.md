@@ -421,7 +421,7 @@ plot 'z.txt' matrix with image
 
 <img src="img/map1.svg" alt="map1" width="80%">
 
-*Palettes* are very flexible in gnuplot, and you can refer to [Palettes](../apdx/palette.md) for more details. Here we use `set palette defined` to define some colors at specific points; `set cbrange`command sets the range of values which are colored using the current `palette`. The `set cbtics` command controls major (labeled) tics on the color box axis, and the option `scale 0` means no tics.
+*Palettes* are very flexible in gnuplot, and you can refer to [Palettes](../apdx/palette.md) for more details. Here we use `set palette defined` to define some colors at specific points; `set cbrange` (*cb* is short for *color range*) command sets the range of values which are colored using the current `palette`. The `set cbtics` command controls major (labeled) tics on the color box axis, and the option `scale 0` means no tics.
 
 To draw a contour, we can use `set table` to output its contour (`cont.gp`):
 
@@ -446,6 +446,17 @@ plot '../../data/z.txt' matrix with image, '../../data/cont.dat' with lines lw 1
 <img src="img/map2.svg" alt="map2" width="80%">
 
 Here, we use the default palette in gnuplot, and you can check how it looks like by invoking `test palette` command.
+
+The last example is to plot a scatter with color:
+
+```
+set palette defined ( 0 'blue', 1 'grey', 2 'red' )
+plot "cloud" u 1:2:3 palette pt 7 ps 2
+```
+
+<img src="img/scatter_color.svg" alt="scatter color" width="80%">
+
+As for `data/cloud`, its first two columns determine the location of each point, and the third column is used to find the point’s color by mapping the numeric value into the provided palette. The color of each point or line segment is found by mapping the values of an additional data column into the palette, using the keyword `palette` in the `plot` command.
 
 ## Working with multiple Figures and Axes
 We have shown the usage of `set multiplot layout`, and we provide one more example (`multi.pg`), which is from [gnuplot demo script: layout.dem](http://gnuplot.sourceforge.net/demo/layout.html):
