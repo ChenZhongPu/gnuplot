@@ -37,7 +37,7 @@ As you can see, the default *style* of gnuplot is different from that of Matplot
 - The legend is displayed.
 - ...
 
-Only a few extra commands are required to custom those styles. For example, `unset key` means "*do not display the legend*".
+Only a few extra commands are required to custom those styles. For example, `unset key` means "*do not display the legend*". If you prefer to some style for your plotting, you can save these configs in a file for reuses. See more at [How to reuse gnuplot's styles](../cook/1_30.md#3-how-to-reuse-gnuplots-styles).
 
 ## Parts of a Figure
 Here are the components of a gnuplot Figure.
@@ -74,8 +74,7 @@ with points pt 22 ps variable lc variable
 ```
 Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30. And we can add a backslash (`\`) to write the command in multiple lines. When using the keywords `pt` (short for *pointtype*), `ps` (short for *pointsize*), or `lc` (short for linecolor) in a plot
  command, the additional keyword `variable` may be given instead of a number.
- In this case the corresponding properties of each point are assigned by
- additional columns of input data.
+ In this case the corresponding properties of each point are assigned by additional columns of input data.
 
 <img src="img/scatter.svg" width="80%" alt="scatter">
 

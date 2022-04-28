@@ -52,7 +52,7 @@ set palette defined ( 0 "red", -1 "white", 1 "blue" )
 
 It is worth noting that the positions need not correspond to actual values from the plot range! In fact, they aren’t absolute positions at all—they’re merely relative positions in the interval spanned by the smallest and the greatest of the positions. You can also use `set cbrange` to map the palette to the desired plot range.
 
-### Loading palette
+### Loading palette[^palette]
 I downloaded a palette file (`viridis.pal`) from [Matplotlib colormaps](http://www.gnuplotting.org/tag/palette/), and then *load* it in the script:
 
 ```
@@ -64,6 +64,7 @@ load 'viridis.pal'
 The complete script can be found at `color_map.gp`.
 
 > You can use `test palette` to graphically present palette capabilities.
+
 ### Sample palettes
 
 Because gnuplot’s default palette isn’t very good, it’s essential that you learn how to define your own palettes. Here are three palettes that are simple enough to keep in mind, so that you can recreate them on the spot.
@@ -88,3 +89,5 @@ The last simple workhorse is the "improved rainbow":
 ```
 set palette defined ( 0 'blue', 1 'cyan', 2 'green', 3 'yellow', 4 'red', 5 'magenta')
 ```
+
+[^palette] A nice source for palettes can be found at [Gnuplotting/gnuplot-palettes](https://github.com/Gnuplotting/gnuplot-palettes).
