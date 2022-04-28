@@ -116,3 +116,50 @@ unset multiplot
 <img src="img/2categorical.svg" alt="2-categorical">
 
 Note that the *qt* terminal is in *enhanced text* mode, so we need to add extra `\\\` to display the underscore. Another solution is to set *noenhanced*.
+
+
+## Controlling line properties
+Lines have many attributes that you can set: linewidth, dash style, antialiased, etc:
+
+```
+set linetype 1 lc rgb "dark-violet" lw 2 
+```
+
+## Working with multiple figures and axes
+
+```
+set multiplot layout 2,1
+unset key
+set linetype 1 lc "black" lw 2
+set linetype 2 lc rgb '#E41A1C' dt 2 lw 2 # red
+f(x) = exp(-x) * cos(2*pi*x)
+plot '../../data/t1.dat' using 1:(f($1)) with points pt 7 ps 1.5 lc 'blue', f(x) with lines ls 1
+
+g(x) = cos(2*pi*x)
+plot [0:5][] g(x) with lines ls 2
+```
+
+<img src="img/2multi.svg" alt="2-multi" width="80%">
+
+## Working with text
+
+```
+set terminal qt font ',16'
+set title "Histogra of IQ"
+set xlabel 'Smarts'
+set ylabel 'Probability'
+set label '{/Symbol m} = 100, {/Symbol s} = 15' at 60,600
+unset key
+set xrange [40:160]
+set grid
+set style fill solid 0.75
+bin(x,s)  = s*floor(x/s)
+binc(x,s) = s*(floor(x/s)+0.5)
+set boxwidth 120/50.
+stats 'smart.dat' u 1 noout
+plot 'smart.dat' using (binc($1,120/50.)):(1./(120/50.*STATS_records)) smooth frequency with boxes fc '#4DAF4A'
+```
+
+<img src="img/2smart.svg" alt="2-smart" width="80%">
+
+The script (`smart.gp`) uses a trick to compute the probability, because it would display frequency for given *bins*.
