@@ -1,5 +1,7 @@
 # More Tutorials
-Matplotlib provides both the `pyplot` API and the object-oriented API, but gnuplot only offers *command* style, which is more like the `pyplot` API of Matplotlib. So, generally, this article has no much difference with [Basic Usage](basic_usage.md), and I only show some script to plot these figures shown in [Pyplot tutorial](https://matplotlib.org/stable/tutorials/introductory/pyplot.html). Readers can skip this section if they have already understood [Basic Usage](basic_usage.md) because most of the usages and concepts are repeated.
+Matplotlib provides both the `pyplot` API and the object-oriented API, but gnuplot only offers *command* style, which is more like the `pyplot` API of Matplotlib. So, generally, this article has no much difference with [Basic Usage](basic_usage.md), and I only show some script to plot these figures shown in [Pyplot tutorial](https://matplotlib.org/stable/tutorials/introductory/pyplot.html). 
+
+Readers can skip most content of this section and jump to [Save plot](#save-plot) directly if they have already understood [Basic Usage](basic_usage.md) because most of the usages and concepts are repeated.
 
 > The script in this section can be found `script/tutorials`.
 
@@ -211,12 +213,12 @@ set terminal postscript eps size 10,8 enhanced color font 'Helvetica,18'
 set output 'barh_eps.eps'
 ```
 
-The complete script can be found at `barh_eps.gp`. Here we set the terminal to `postscript` with `eps` option. Note that the size for *.eps* is only for height/width ratio because it has *infinite* pixels.
+The complete script can be found at `barh_eps.gp`. Here we set the terminal to `postscript` with `eps` option. Note that the unit of size is *inch* by default.
 
 ### PDF
 
 ```
-set terminal pdfcairo size 20,16 enhanced font 'Verdana,24' rounded
+set terminal pdfcairo size 10,8 enhanced font 'Verdana,24' rounded
 set output 'barh_pdf.pdf'
 ```
 The complete script can be found at `barh_pdf.gp`. Here we set the terminal to `pdfcairo`. Note that the unit of size is *inch* by default.
