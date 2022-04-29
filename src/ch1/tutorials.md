@@ -1,6 +1,8 @@
 # More Tutorials
 Matplotlib provides both the `pyplot` API and the object-oriented API, but gnuplot only offers *command* style, which is more like the `pyplot` API of Matplotlib. So, generally, this article has no much difference with [Basic Usage](basic_usage.md), and I only show some script to plot these figures shown in [Pyplot tutorial](https://matplotlib.org/stable/tutorials/introductory/pyplot.html). Readers can skip this section if they have already understood [Basic Usage](basic_usage.md) because most of the usages and concepts are repeated.
 
+> The script in this section can be found `script/tutorials`.
+
 ## Intro to plot
 
 `plot` is the most important command in gnuplot.
@@ -163,3 +165,73 @@ plot 'smart.dat' using (binc($1,120/50.)):(1./(120/50.*STATS_records)) smooth fr
 <img src="img/2smart.svg" alt="2-smart" width="80%">
 
 The script (`smart.gp`) uses a trick to compute the probability, because it would display frequency for given *bins*.
+
+## Horizontal bar
+In gnuplot, there is no delicate way to draw a horizontal bar directly, and you have to use `boxxyerror` to achieve the similar effect, while it can be done easily with the `barh` function in Matplotlib. In what follows, we are going to plot the figure in [The Lifecycle of a Plot](https://matplotlib.org/stable/tutorials/introductory/lifecycle.html). This subsection is adapted from [Horizontal bar chart in gnuplot](https://stackoverflow.com/questions/62848395/).
+
+```
+set yrange [0:*]
+set style fill solid
+unset key
+myBoxWidth = 0.8
+set offsets 0,0,0.5-myBoxWidth/2.,0.5
+
+plot $data using 2:0:(0):2:($0-myBoxWidth/2.):($0+myBoxWidth/2.):($0+1):ytic(1) \
+with boxxyerror lc var
+```
+
+<img src="img/barh_png.png" alt="2-barh" width="80%">
+
+The complete script can be found at `barh.gp`.
+
+## Save plot
+Gnuplot provides a variety of formats for outputs by setting its `terminal`[^terminal]. In practice, we would like to run a script and output the figure in a batch mode.
+
+```
+$ gnuplot foo.gp
+```
+
+### PNG
+
+```
+set terminal pngcairo size 1600,1200 enhanced font 'Verdana,16'
+set output 'barh_png.png'
+```
+
+The complete script can be found at `barh_png.gp`. Here we set the terminal to `pngcairo`, and then specify its size in pixels and its font type and font size. You can check the documentation by typing `help set terminal pngcairo`. For example, the `transparent` option would make output figure *transparent*.
+
+```
+set terminal pngcairo transparent size 1600,1200 enhanced font 'Verdana,16'
+```
+
+### EPS
+
+```
+set terminal postscript eps size 10,8 enhanced color font 'Helvetica,18'
+set output 'barh_eps.eps'
+```
+
+The complete script can be found at `barh_eps.gp`. Here we set the terminal to `postscript` with `eps` option. Note that the size for *.eps* is only for height/width ratio because it has *infinite* pixels.
+
+### PDF
+
+```
+set terminal pdfcairo size 20,16 enhanced font 'Verdana,24' rounded
+set output 'barh_pdf.pdf'
+```
+The complete script can be found at `barh_pdf.gp`. Here we set the terminal to `pdfcairo`. Note that the unit of size is *inch* by default.
+
+> The `pdf` terminal is deprecated.
+
+### SVG
+
+```
+set terminal svg size 1600,1200 enhanced font 'Helvetica,18'
+set output 'barh_svg.svg'
+```
+
+The complete script can be found at `barh_svg.gp`. Here we set the terminal to `svg`. 
+
+And we can also output `.tex` by *epslatex* terminal. See more at [How to write complex mathematical expressions](../cook/1_30.md#2-how-to-write-complex-mathematical-expressions).
+
+[^terminal] Reader can refer to [Complete list of terminals](http://www.bersch.net/gnuplot-doc/complete-list-of-terminals.html).

@@ -6,6 +6,7 @@ src = "src"
 title = "Gnuplot Port For Matplotlib"
 
 [output.html]
+default-theme = 'rust'
 mathjax-support = true
 git-repository-url = "https://github.com/ChenZhongPu/gnuplot"
 
