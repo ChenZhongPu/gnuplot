@@ -369,7 +369,7 @@ plot "strings.dat" using 2:xticlabels(1) with boxes
 
 <img src="img/strings.svg" alt="strings" width="80%">
 
-Here we are using `boxes`, and it is also possible to plot this using histograms. But histograms are mainly used to plot multi-group data.
+Here we are using `boxes`, and it is also possible to plot this using histograms. But histograms are mainly used to plot multi-group data (see more at [Revisit bar chart](examples.md#revisit-bar-chart)).
 
 As for a 2D *box* plotting, only one dimension is required, and we can use an extra column to be the ticks labels. So `2:xticlabels(1)` means plotting with the second (2nd) column and its first (1st) column is used as ticks labels on X. By default, each box extends to touch the adjacent boxes (in other words, width is 1), and `set boxwidth` is to set its width.
 
