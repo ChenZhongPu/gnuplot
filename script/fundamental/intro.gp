@@ -8,7 +8,6 @@ EOD
 unset key
 set border 3
 set tics out nomirror
-set style data histogram
 set style fill solid 0.9
 set yrange [0:5]
 set ylabel 'Value'
