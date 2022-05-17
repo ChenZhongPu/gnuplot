@@ -30,3 +30,24 @@ Here we use `set zeroaxis` to achieve this.
 A *scale* defines a unique mapping between data and aesthetics. Importantly, a scale must be one-to-one, such that for each specific data value there is exactly one aesthetics value and vice versa (`scales.gp`).
 
 <img src="img/scales.svg" width="80%">
+
+Let’s put things into practice. We prepared the monthly precipitation data from NOAA, and use `smooth sbezier` option to make it smooth. Here we map precipitation onto the y axis, month onto the x axis, location onto color, and visualize these aesthetics with solid lines.
+
+<img src="img/precip.svg" width="80%">
+
+```
+set datafile separator ","
+set xdata time
+set timefmt "%m"
+set xtics format "%b"
+unset mxtics
+plot 'city.csv' u 2:3 smooth sbezier lw 3, \
+'city2.csv' u 2:3 smooth sbezier lw 3, \
+'city3.csv' u 2:3 smooth sbezier lw 3, 
+```
+
+The complete code can be found at `precip.gp`. 
+
+Because now the key variable of interest (precipitation) is shown as color, we need to show sufficiently large colored areas for the color to convey useful information. Therefore, for this visualization I have chosen squares instead of lines, one for each month and location, and I have colored them by the precipitation for each month:
+
+<img src="img/precip2.png" width="90%">
