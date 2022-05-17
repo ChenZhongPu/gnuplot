@@ -48,6 +48,6 @@ plot 'city.csv' u 2:3 smooth sbezier lw 3, \
 
 The complete code can be found at `precip.gp`. 
 
-Because now the key variable of interest (precipitation) is shown as color, we need to show sufficiently large colored areas for the color to convey useful information. Therefore, for this visualization I have chosen squares instead of lines, one for each month and location, and I have colored them by the precipitation for each month:
+Because now the key variable of interest (precipitation) is shown as color, we need to show sufficiently large colored areas for the color to convey useful information. Therefore, for this visualization I have chosen squares instead of lines, one for each month and location, and I have colored them by the precipitation for each month (`precip2.gp`):
 
-<img src="img/precip2.png" width="90%">
+<img src="img/precip2.svg">
