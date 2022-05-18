@@ -9,6 +9,7 @@
 - [Fundamentals of Data Visualization](fundamental/README.md)
     - [Introduction](fundamental/intro.md)
     - [Visualizing data: Mapping data onto aesthetics](fundamental/vizdata.md)
+    - [Coordinate systems and axes](fundamental/coor.md)
 - [Appendix](apdx/README.md)
     - [Common Abbreviations](apdx/abbre.md)
     - [Time Format](apdx/time_format.md)
