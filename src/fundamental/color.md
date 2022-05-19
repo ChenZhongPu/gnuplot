@@ -19,3 +19,7 @@ plot for [ii=1:8] f(x,ii) ls ii lw 2
 <img src="img/pair.svg" width="60%">
 
 Cool! A nice color scheme! 
+
+As an example of how we use qualitative color scales, consider the following figure. It shows the percent population growth from 2010 to 2020 in China (`population.gp`).
+
+<img src="img/population.svg">
