@@ -10,6 +10,7 @@
     - [Introduction](fundamental/intro.md)
     - [Visualizing data: Mapping data onto aesthetics](fundamental/vizdata.md)
     - [Coordinate systems and axes](fundamental/coor.md)
+    - [Color scales](fundamental/color.md)
 - [Appendix](apdx/README.md)
     - [Common Abbreviations](apdx/abbre.md)
     - [Time Format](apdx/time_format.md)
