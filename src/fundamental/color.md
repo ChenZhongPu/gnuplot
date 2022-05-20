@@ -23,3 +23,22 @@ Cool! A nice color scheme!
 As an example of how we use qualitative color scales, consider the following figure. It shows the percent population growth from 2010 to 2020 in China (`population.gp`).
 
 <img src="img/population.svg">
+
+## Color to represent data values
+
+Color can also be used to represent data values, such as income, temperature, or speed. In this case, we use a **sequential** color scale. Such a scale contains a sequence of colors that clearly indicate (i) which values are larger or smaller than which other ones and (ii) how distant two specific values are from each other. The second point implies that the color scale needs to be perceived to vary uniformly across its entire range.
+
+Sequential scales can be based on a single hue (e.g., from dark blue to light blue) or on multiple hues (e.g., from dark red to light yellow).
+
+<img src="img/seq_color.svg">
+
+
+- ColorBrewer Blues (from dark to light blue): See more at [Blues.plt](https://github.com/aschn/gnuplot-colorbrewer/blob/master/sequential/Blues.plt).
+- [Viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) (from dark blue via green to light yellow): The viridis palette was initially developed for the python package matplotlib, and was implemented in R later. See more at [viridis.pal](https://github.com/Gnuplotting/gnuplot-palettes/blob/master/viridis.pal).
+
+Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called *choropleths*. Unlike R, gnuplot does not support built-in geo-maps, and readers can refer to the following links:
+
+- [U.S. states and election results](http://www.gnuplotting.org/us-states-and-election-results/)
+- [Plotting the world](http://www.gnuplotting.org/plotting-the-world/)
+- [Plotting the world revisited](http://www.gnuplotting.org/plotting-the-world-revisited/)
+- [Mercator projection](http://www.gnuplotting.org/mercator-projection/)
