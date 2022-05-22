@@ -36,9 +36,27 @@ Sequential scales can be based on a single hue (e.g., from dark blue to light bl
 - ColorBrewer Blues (from dark to light blue): See more at [Blues.plt](https://github.com/aschn/gnuplot-colorbrewer/blob/master/sequential/Blues.plt).
 - [Viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) (from dark blue via green to light yellow): The viridis palette was initially developed for the python package matplotlib, and was implemented in R later. See more at [viridis.pal](https://github.com/Gnuplotting/gnuplot-palettes/blob/master/viridis.pal).
 
-Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called *choropleths*. Unlike R, gnuplot does not support built-in geo-maps, and readers can refer to the following links:
+Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called *choropleths*. Unlike R, gnuplot does not support built-in geo-maps, and readers can refer to useful links:
 
+- [gnuplot-geomap](https://github.com/ChenZhongPu/gnuplot-geomap)
 - [U.S. states and election results](http://www.gnuplotting.org/us-states-and-election-results/)
 - [Plotting the world](http://www.gnuplotting.org/plotting-the-world/)
 - [Plotting the world revisited](http://www.gnuplotting.org/plotting-the-world-revisited/)
 - [Mercator projection](http://www.gnuplotting.org/mercator-projection/)
+
+The following figure shows an example where I have mapped average GDP onto a map of China (`salary.gp`).
+
+<img src="img/china-salary.svg">
+
+
+In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show those with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a **diverging** color scale. Diverging scales need to be *balanced*, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction (`diverging_color.gp`).
+
+<img src="img/div_color.svg">
+
+- [CARTO Earth](https://carto.com/carto-colors/)
+- [ColorBrewer PiYG](https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PiYG.plt)
+- Blue-Red: See more at [HCL-Based Color Palettes](https://colorspace.r-forge.r-project.org/articles/hcl_palettes.html) and [12 Color Palettes for Telling Better Stories with Your Data](https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data)
+
+As an example application of a diverging color scale, consider the following, which shows the proportion of Urban population of China in 2000 (note that it is always greater than 50% in 2020). Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. (`urban.gp`)
+
+<img src="img/china-urban.svg">
