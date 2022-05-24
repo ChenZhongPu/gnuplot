@@ -71,6 +71,6 @@ Example accent color scales, each with four base colors and three accent colors:
 
 When working with accent colors, it is critical that the baseline colors do not compete for attention. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader’s attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points.
 
-The following figure shows *weight* and *BMI* of all American athletes in Beijing [Olympics](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results), and we can find that boxing athletes are the shortest and leanest (`sport.gp`).
+The following figure shows *weight* and *BMI* of all American meal athletes in Beijing [Olympics](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results), and we can find that boxing athletes are the shortest and leanest (`sport.gp`).
 
 <img src="img/sports.svg">
