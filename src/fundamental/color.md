@@ -53,10 +53,24 @@ In some cases, we need to visualize the deviation of data values in one of two d
 
 <img src="img/div_color.svg">
 
-- [CARTO Earth](https://carto.com/carto-colors/)
-- [ColorBrewer PiYG](https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PiYG.plt)
-- Blue-Red: See more at [HCL-Based Color Palettes](https://colorspace.r-forge.r-project.org/articles/hcl_palettes.html) and [12 Color Palettes for Telling Better Stories with Your Data](https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data)
+- [CARTO Earth](https://carto.com/carto-colors/): brown to greenish blue.
+- [ColorBrewer PiYG](https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PiYG.plt): pink to yellow-green.
+- Blue-Red: blue to red. See more at [HCL-Based Color Palettes](https://colorspace.r-forge.r-project.org/articles/hcl_palettes.html) and [12 Color Palettes for Telling Better Stories with Your Data](https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data).
 
 As an example application of a diverging color scale, consider the following, which shows the proportion of Urban population of China in 2000 (note that it is always greater than 50% in 2020). Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. (`urban.gp`)
 
 <img src="img/china-urban.svg">
+
+## Color as a tool to highlight
+
+Color can also be an effective tool to highlight specific elements in the data. An easy way to achieve this emphasis is to color these figure elements in a color or set of colors that vividly stand out against the rest of the figure. This effect can be achieved with **accent** color scales.
+
+Example accent color scales, each with four base colors and three accent colors:
+
+<img src="img/accent_color.svg">
+
+When working with accent colors, it is critical that the baseline colors do not compete for attention. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader’s attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points.
+
+The following figure shows *weight* and *BMI* of all American athletes in Beijing [Olympics](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results), and we can find that boxing athletes are the shortest and leanest (`sport.gp`).
+
+<img src="img/sports.svg">
