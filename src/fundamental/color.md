@@ -63,7 +63,7 @@ As an example application of a diverging color scale, consider the following, wh
 
 ## Color as a tool to highlight
 
-Color can also be an effective tool to highlight specific elements in the data. An easy way to achieve this emphasis is to color these figure elements in a color or set of colors that vividly stand out against the rest of the figure. This effect can be achieved with **accent** color scales.
+Color can also be an effective tool to highlight specific elements in the data. An easy way to achieve this emphasis is to color these figure elements in a color or set of colors that vividly stand out against the rest of the figure. This effect can be achieved with **accent** color scales (in fact, it is one of the qualitative palettes).
 
 Example accent color scales, each with four base colors and three accent colors:
 
