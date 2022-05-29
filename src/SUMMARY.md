@@ -12,6 +12,7 @@
     - [Coordinate systems and axes](fundamental/coor.md)
     - [Color scales](fundamental/color.md)
     - [Directory of visualizations](fundamental/dirviz.md)
+    - [Visualizing amounts](fundamental/amounts.md)
 - [Appendix](apdx/README.md)
     - [Common Abbreviations](apdx/abbre.md)
     - [Time Format](apdx/time_format.md)

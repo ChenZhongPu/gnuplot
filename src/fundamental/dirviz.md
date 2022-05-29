@@ -35,3 +35,13 @@ Scatterplots represent the archetypical visualization when we want to show one q
 <img src="img/xy2.svg">
 
 When the x axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs. We can use smooth lines to represent trends in a larger dataset (`xy2.gp`).
+
+## Geospatial data
+Although gnuplot does not have built-in support for geospatial data, we can achieve the similar effect by `filledcurves`. See more at [gnuplot-geomap
+](https://github.com/ChenZhongPu/gnuplot-geomap).
+
+## Uncertainty
+
+<img src="img/error.svg">
+
+Error bars are meant to indicate the range of likely values for some estimate or measurement (`error.gp`).
