@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Palettes - Gnuplot Port For Matplotlib</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ch1/index.html"><strong aria-hidden="true">1.</strong> Introductory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch1/basic_usage.html"><strong aria-hidden="true">1.1.</strong> Basic Usage</a></li><li class="chapter-item expanded "><a href="../ch1/tutorials.html"><strong aria-hidden="true">1.2.</strong> More Tutorials</a></li><li class="chapter-item expanded "><a href="../ch1/examples.html"><strong aria-hidden="true">1.3.</strong> More Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../cook/index.html"><strong aria-hidden="true">2.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cook/1_30.html"><strong aria-hidden="true">2.1.</strong> Item 1-30</a></li></ol></li><li class="chapter-item expanded "><a href="../fundamental/index.html"><strong aria-hidden="true">3.</strong> Fundamentals of Data Visualization</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fundamental/intro.html"><strong aria-hidden="true">3.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../fundamental/vizdata.html"><strong aria-hidden="true">3.2.</strong> Visualizing data: Mapping data onto aesthetics</a></li><li class="chapter-item expanded "><a href="../fundamental/coor.html"><strong aria-hidden="true">3.3.</strong> Coordinate systems and axes</a></li><li class="chapter-item expanded "><a href="../fundamental/color.html"><strong aria-hidden="true">3.4.</strong> Color scales</a></li><li class="chapter-item expanded "><a href="../fundamental/dirviz.html"><strong aria-hidden="true">3.5.</strong> Directory of visualizations</a></li><li class="chapter-item expanded "><a href="../fundamental/amounts.html"><strong aria-hidden="true">3.6.</strong> Visualizing amounts</a></li></ol></li><li class="chapter-item expanded "><a href="../apdx/index.html"><strong aria-hidden="true">4.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../apdx/abbre.html"><strong aria-hidden="true">4.1.</strong> Common Abbreviations</a></li><li class="chapter-item expanded "><a href="../apdx/time_format.html"><strong aria-hidden="true">4.2.</strong> Time Format</a></li><li class="chapter-item expanded "><a href="../apdx/greek.html"><strong aria-hidden="true">4.3.</strong> Greek Letters</a></li><li class="chapter-item expanded "><a href="../apdx/3d.html"><strong aria-hidden="true">4.4.</strong> 3D Data</a></li><li class="chapter-item expanded "><a href="../apdx/palette.html" class="active"><strong aria-hidden="true">4.5.</strong> Palettes</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Gnuplot Port For Matplotlib</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ChenZhongPu/gnuplot" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="palettes"><a class="header" href="#palettes">Palettes</a></h1>
+<p>Gnuplot provides a facility to map numeric values into a continuous range of colors. The gnuplot command to create and manage such color gradients is <code>set palette</code>. This article is adapted from <em>Gnuplot in Action</em>.</p>
+<h2 id="an-example"><a class="header" href="#an-example">An example</a></h2>
+<pre><code>set isosamples 200
+set palette defined (0 &quot;blue&quot;, 0.5 &quot;light-grey&quot;, 1 &quot;red&quot;)
+splot [-2:2][-2:2] exp(-(x**2 +  y**2))*cos(x/4)*sin(y)*cos(2*(x**2+y**2)) w pm3d
+</code></pre>
+<img src="image/palette_example.svg" alt="palette_example" width="80%">
+<ul>
+<li>The <code>isosamples</code> are the number of &quot;samples&quot; in each direction (x and y).</li>
+<li>The <code>set palette</code> command is used to create a smooth color gradient palette in gnuplot.</li>
+<li>The <code>pm3d</code> (short for palette-mapped 3d) is style for drawing palette-mapped 3d and 4d data as color/gray maps and surfaces.</li>
+</ul>
+<h2 id="creating-palettes"><a class="header" href="#creating-palettes">Creating palettes</a></h2>
+<p>There are basically two different ways to define a color gradient using <code>set palette</code>:</p>
+<ul>
+<li>Through a discrete set of colors at fixed positions within the numerical range. The <code>st palette</code> command fills in the gaps between these nodes though linear interpolation.</li>
+<li>Through a set of three functions (one for each color component) that map the numerical range to a color component.</li>
+</ul>
+<p>In this article, we only discuss the first method.</p>
+<h3 id="color-models-and-components"><a class="header" href="#color-models-and-components">Color models and components</a></h3>
+<p>The <code>set palette</code> command can handle five different color models: RGB (reg-green-blue), HSV (hue-saturation-value), CMY, YIQ, and CIE XYZ. For computer graphics, RGB and HSV are by far the most important, and the default is the RBG model in gnuplot.</p>
+<p>To specify the three components, the <code>set palette</code> command accepts three different formats:</p>
+<ul>
+<li>A named color, such as <code>&quot;red&quot;</code>. Use <code>show colornames</code> for a list of permissible colors.</li>
+<li>A hex string, such as <code>&quot;#ff0000&quot;</code> or <code>&quot;0xff0000&quot;</code>.</li>
+<li>A numeric triple, such as <code>1 0 0</code>.</li>
+</ul>
+<h3 id="defining-palette-through-nodes"><a class="header" href="#defining-palette-through-nodes">Defining palette through nodes</a></h3>
+<p>You can define a palette by specifying a set of colors at fixed locations within the plot range, and gnuplot will fill in the gaps in between. This is, in my opinion, the most useful way to create palettes in practice.</p>
+<p>As what we did in the example, we use the <code>defined</code> keyword to specify the list of colors and positions. You can use any of the color format discussed in the previous section, and hence the following four commands are equivalent:</p>
+<pre><code>set palette defined ( -1 &quot;red&quot;, 0 &quot;white&quot;, 1 &quot;blue&quot; )
+set palette defined ( -1 &quot;#ff0000&quot;, 0 &quot;#ffffff&quot;, 1 &quot;#0000ff&quot; )
+set palette defined(-1 100, 0 111, 1 001 ) 
+set palette defined ( -1 &quot;red&quot;, 0 &quot;#ffffff&quot;, 1 0 0 1 )
+</code></pre>
+<p>There’s no limit on the number of entries in the list of colors. The values used as positions aren’t restricted: they can be positive or negative, integer or floating-point. The only constraint is that <strong>they must form a non-decreasing sequence of numbers</strong>. For example, the following is not valid because positions are out of order:</p>
+<pre><code>set palette defined ( 0 &quot;red&quot;, -1 &quot;white&quot;, 1 &quot;blue&quot; )
+</code></pre>
+<p>It is worth noting that the positions need not correspond to actual values from the plot range! In fact, they aren’t absolute positions at all—they’re merely relative positions in the interval spanned by the smallest and the greatest of the positions. You can also use <code>set cbrange</code> to map the palette to the desired plot range.</p>
+<h3 id="loading-palette1"><a class="header" href="#loading-palette1">Loading palette<sup class="footnote-reference"><a href="#palette">1</a></sup></a></h3>
+<p>I downloaded a palette file (<code>viridis.pal</code>) from <a href="http://www.gnuplotting.org/tag/palette/">Matplotlib colormaps</a>, and then <em>load</em> it in the script:</p>
+<pre><code>load 'viridis.pal'
+</code></pre>
+<img src="image/color_map.svg" alt="viridis" width="80%">
+<p>The complete script can be found at <code>color_map.gp</code>.</p>
+<blockquote>
+<p>You can use <code>test palette</code> to graphically present palette capabilities.</p>
+</blockquote>
+<h3 id="sample-palettes"><a class="header" href="#sample-palettes">Sample palettes</a></h3>
+<p>Because gnuplot’s default palette isn’t very good, it’s essential that you learn how to define your own palettes. Here are three palettes that are simple enough to keep in mind, so that you can recreate them on the spot.</p>
+<p>The first one:</p>
+<pre><code>set palette defined ( 0 &quot;blue&quot;, 0.5 &quot;white&quot;, 1 &quot;red&quot; )
+</code></pre>
+<p>Despite its extreme simplicity, the blue/white/red palette is amazingly convenient and versatile.</p>
+<p>The second one conveys a sense of ordering consists of the traffic light colors (red, yellow, and green): </p>
+<pre><code>set palette defined ( 0 &quot;web-green&quot;, 0.5 &quot;goldenrod&quot;, 1 &quot;red&quot; )
+</code></pre>
+<p>In addition to the sense of ordering, this particular trio of colors invariably also conveys a semantic “good/bad” meaning.</p>
+<p>The last simple workhorse is the &quot;improved rainbow&quot;:</p>
+<pre><code>set palette defined ( 0 'blue', 1 'cyan', 2 'green', 3 'yellow', 4 'red', 5 'magenta')
+</code></pre>
+<p><sup class="footnote-reference"><a href="#palette">1</a></sup> A nice source for palettes can be found at <a href="https://github.com/Gnuplotting/gnuplot-palettes">Gnuplotting/gnuplot-palettes</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../apdx/3d.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../apdx/3d.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_line_numbers = true;
+        </script>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

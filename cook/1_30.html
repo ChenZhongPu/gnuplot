@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Item 1-30 - Gnuplot Port For Matplotlib</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ch1/index.html"><strong aria-hidden="true">1.</strong> Introductory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch1/basic_usage.html"><strong aria-hidden="true">1.1.</strong> Basic Usage</a></li><li class="chapter-item expanded "><a href="../ch1/tutorials.html"><strong aria-hidden="true">1.2.</strong> More Tutorials</a></li><li class="chapter-item expanded "><a href="../ch1/examples.html"><strong aria-hidden="true">1.3.</strong> More Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../cook/index.html"><strong aria-hidden="true">2.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cook/1_30.html" class="active"><strong aria-hidden="true">2.1.</strong> Item 1-30</a></li></ol></li><li class="chapter-item expanded "><a href="../fundamental/index.html"><strong aria-hidden="true">3.</strong> Fundamentals of Data Visualization</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fundamental/intro.html"><strong aria-hidden="true">3.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../fundamental/vizdata.html"><strong aria-hidden="true">3.2.</strong> Visualizing data: Mapping data onto aesthetics</a></li><li class="chapter-item expanded "><a href="../fundamental/coor.html"><strong aria-hidden="true">3.3.</strong> Coordinate systems and axes</a></li><li class="chapter-item expanded "><a href="../fundamental/color.html"><strong aria-hidden="true">3.4.</strong> Color scales</a></li><li class="chapter-item expanded "><a href="../fundamental/dirviz.html"><strong aria-hidden="true">3.5.</strong> Directory of visualizations</a></li><li class="chapter-item expanded "><a href="../fundamental/amounts.html"><strong aria-hidden="true">3.6.</strong> Visualizing amounts</a></li></ol></li><li class="chapter-item expanded "><a href="../apdx/index.html"><strong aria-hidden="true">4.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../apdx/abbre.html"><strong aria-hidden="true">4.1.</strong> Common Abbreviations</a></li><li class="chapter-item expanded "><a href="../apdx/time_format.html"><strong aria-hidden="true">4.2.</strong> Time Format</a></li><li class="chapter-item expanded "><a href="../apdx/greek.html"><strong aria-hidden="true">4.3.</strong> Greek Letters</a></li><li class="chapter-item expanded "><a href="../apdx/3d.html"><strong aria-hidden="true">4.4.</strong> 3D Data</a></li><li class="chapter-item expanded "><a href="../apdx/palette.html"><strong aria-hidden="true">4.5.</strong> Palettes</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Gnuplot Port For Matplotlib</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ChenZhongPu/gnuplot" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="item-1-30"><a class="header" href="#item-1-30">Item 1-30</a></h1>
+<h2 id="1-how-to-resize-the-figure"><a class="header" href="#1-how-to-resize-the-figure">1. How to resize the figure</a></h2>
+<p>Command <code>set size ratio</code> can set the radio of height/width. However, this won't affect the size of figure itself, and it will only change the ratio the plotting area. To remove the extra space, we can use <code>size &lt;width&gt;, &lt;height&gt;</code> when <code>set terminal</code>.</p>
+<blockquote>
+<p>Note that the <code>size</code> has different meanings for different <code>terminal</code>. See more at <a href="../ch1/tutorials.html#save-plot">Save plot</a>.</p>
+</blockquote>
+<p>For example, the following code is used to plot the time series data like <a href="../ch1/basic_usage.html#plotting-dates-and-strings">Plotting dates and strings</a>:</p>
+<pre><code>set terminal pngcairo transparent size 1000,540 enhanced font 'Verdana,16'
+set output 'date.png'
+unset key
+set xdata time
+set timefmt &quot;%Y-%m-%d %H:%M:00&quot;
+set xtics format &quot;%m-%d&quot;
+plot &quot;date.dat&quot; u 1:3 w lines lw 1.5
+</code></pre>
+<img src="img/date.png" alt="date">
+<h2 id="2-how-to-write-complex-mathematical-expressions"><a class="header" href="#2-how-to-write-complex-mathematical-expressions">2. How to write complex mathematical expressions</a></h2>
+<p>We can set <em>Latex</em> as the output in gnuplot, and thus this feature makes it very convenient to write complex mathematical expressions.</p>
+<pre><code>set term epslatex standalone color
+set samples 1000
+set output 'example.tex'
+plot sin(x) title '$\sigma \frac{3}{4}$'
+</code></pre>
+<p>The code can be found at <code>math.gp</code>. Here, we set the <code>term</code> (short for <em>terminal</em>) as <code>epslatex</code>, and the remaining options:</p>
+<ul>
+<li><code>standalone</code>: The output is a standalone <em>.tex</em> file. Otherwise, we can only include the output in another <em>Latex</em> file.</li>
+<li><code>color</code>: As the name implies, the output will always be colorful. Otherwise, some lines may be in monochrome mode.</li>
+</ul>
+<p>The third line is to specify the output file. In fact, another <em>.eps</em> file will also be generated (you do not have to specify its name), where <em>.tex</em> manages the mathematical expression, and <em>.eps</em> accounts for the plotting itself. We can run this script by <code>gnuplot math.gp</code> in the shell:</p>
+<pre><code class="language-sh">$ gunplot math.gp
+$ ls
+$ example-inc.eps  example.tex  math.gp
+</code></pre>
+<p>After that, we can compile it to <a href="img/math.pdf">PDF</a> via <em>Latex</em>.</p>
+<p>I also wrote a helper script (<code>tex2eps.sh</code>) to generate a standalone <em>.eps</em> figure from <em>.tex</em>. Suppose there are <code>example-inc.eps</code> and <code>example.tex</code> in the current folder.</p>
+<pre><code class="language-sh">$ ./tex2eps.sh example.tex
+</code></pre>
+<p>Then it would generate a standalone <em>.eps</em> file containing both plot itself and mathematical expressions.</p>
+<h2 id="3-how-to-reuse-gnuplots-styles"><a class="header" href="#3-how-to-reuse-gnuplots-styles">3. How to reuse gnuplot's styles</a></h2>
+<p>This article is adapted from <a href="https://stackoverflow.com/questions/41602351">How to make gnuplot charts look more visually appealing?</a>. As we have already seen, the default style of gnuplot is not appealing enough, and we often need custom configs, such as <code>lw</code> (<em>linewidth</em>). Readers can refer to <a href="https://github.com/Gnuplotting/gnuplot-palettes">gnuplot-palettes</a> for more useful resources.</p>
+<p>Some people may would like to a standalone script. They may collect some fancy <em>styles</em>, and copy these styles into their current working script.</p>
+<pre><code># define axis
+# remove border on top and right and set color to gray
+set style line 11 lc rgb '#808080' lt 1
+set border 3 back ls 11
+set tics nomirror
+# define grid
+set style line 12 lc rgb '#808080' lt 0 lw 1
+set grid back ls 12
+
+# color definitions
+set style line 1 lc rgb '#8b1a0e' pt 1 ps 1 lt 1 lw 2 # --- red
+set style line 2 lc rgb '#5e9c36' pt 6 ps 1 lt 1 lw 2 # --- green
+</code></pre>
+<p>The complete script can be found at <code>fancy.gp</code>.</p>
+<img src="img/fancy.svg" alt="fancy">
+<p>You can also store these styles in an external file. Here we prepare another <code>style</code> file which configs the <em>line</em>, <em>border</em>, <em>ticks</em>, <em>border</em> and <em>grid</em>, and then we can load it in our script:</p>
+<pre><code>load &quot;style&quot;
+set terminal qt font &quot;Alegreya, 14&quot; size 800, 580
+
+set xlabel &quot;x&quot;
+set ylabel &quot;f(x)&quot;
+set grid
+set key right top
+set xrange[0:6.28]
+set yrange[-1:1]
+
+plot sin(x) w l ls 1, cos(x) w l ls 2
+</code></pre>
+<img src="img/sinx.svg" alt="sinx">
+<blockquote>
+<p>The same technology is also used in <a href="../apdx/palette.html#loading-palettepalette">Loading palette</a>.</p>
+</blockquote>
+<p>By the way, one can also rename <code>style</code> to <code>.gnuplot</code> and put it in her home directory (it works on Linux and macOS). Then gnuplot would automatically load this file.</p>
+<h2 id="4-how-to-plot-stacked-bar-charts"><a class="header" href="#4-how-to-plot-stacked-bar-charts">4. How to plot stacked bar charts</a></h2>
+<p>We reuse the example in <a href="../ch1/examples.html#revisit-bar-chart">Revisit bar chart</a>, and try to plot it as a stacked bar.</p>
+<pre><code>set style data histogram
+set style histogram rowstacked
+set boxwidth 0.8 relative
+</code></pre>
+<img src="img/stacked.png" alt="stack">
+<p>In the code (<code>stacked.gp</code>), we use <code>set style histogram rowstacked</code> to set the histogram <em>rowstacked</em>, and the default style corresponds to <code>set style histogram clustered gap 2</code>. </p>
+<p>Note that to make some space between boxes, we use the syntax <code>set boxwidth {&lt;width&gt;} {absolute|relative}</code>. By default, adjacent boxes are extended in width until they touch each other. <code>Relative</code> widths are interpreted as being a fraction of this default width, and this option is widely used.</p>
+<h2 id="5-how-to-plot-horizontal-bar-charts"><a class="header" href="#5-how-to-plot-horizontal-bar-charts">5. How to plot horizontal bar charts</a></h2>
+<p>As we mentioned in <a href="../ch1/tutorials.html#horizontal-bar">Horizontal bar</a>, we can use <code>boxxyerror</code> to plot a horizontal bar. Here we use another trick: <em>by rotating</em> (<code>hbar.gp</code>).</p>
+<pre><code>set bmargin 4
+set tmargin 2
+set style fill solid border -1
+set boxwidth 0.8
+set y2range [0:*]
+set y2tics
+set xtics offset 0,-0.5 right
+set xtics rotate by 90
+set y2tics rotate by 90
+set y2tics offset 0,-1
+</code></pre>
+<p>And we also have to rotate the output by hand.</p>
+<img src="img/hbar.png" alt="hbar" width="50%">
+<p>It is a bit complicated. So I still recommend the method introduced in <a href="../ch1/tutorials.html#horizontal-bar">Horizontal bar</a>.</p>
+<h2 id="6-how-to-customize-borders"><a class="header" href="#6-how-to-customize-borders">6. How to customize borders?</a></h2>
+<p>Sometimes, we may like to keep the X1 (bottom) and Y1 (left) only. We add the code in the following into <code>stacked.gp</code>:</p>
+<pre><code>set border 3
+</code></pre>
+<img src="img/stacked2.png" alt="stack2">
+<p>As shown in <a href="#3-how-to-reuse-gnuplots-styles">How to reuse gnuplot styles</a>, it is also possible to set borders' other properties, such as <em>linetype</em>, <em>linecolor</em>, and <em>linewidth</em>. In 2D plots the border is normally drawn on top of all plots elements (<code>front</code>). If you want the border to be drawn behind the plot elements, use <code>set border back</code>. Then, what does <em>3</em> mean here? The borders are encoded in a 12-bit integer: the four low bits control the border for <code>plot</code>:</p>
+<ul>
+<li>1: bottom</li>
+<li>2: left</li>
+<li>4: top</li>
+<li>8: right</li>
+</ul>
+<p>Therefore, <em>3</em> is the sum of 1 and 2, indicting <em>bottom</em> and <em>left</em>, respectively.</p>
+<h2 id="7-how-to-customize-keys"><a class="header" href="#7-how-to-customize-keys">7. How to customize keys?</a></h2>
+<p>Most of the time, we use <code>unset key</code> to <em>not</em> show the key in previous examples. In this item, we discuss how to customize <em>key</em>. Readers can type <code>help set key</code> for details.</p>
+<p>First, as for the position, you can choose <code>{left | right | center} {top | bottom | center}</code> (default is <code>right top</code>). Secondly, as for how they are arranged, you can choose <code>{vertical | horizontal}</code> (default is <code>vertical</code>). Sometimes, we would like to add a <em>box</em> using <code>box</code> option.</p>
+<pre><code>set key top left box
+set xrange [0:1]
+plot x ls 1 t 'x', x**2 ls 2 t 'x^2', x**3 ls 3 t 'x^3'
+</code></pre>
+<img src="img/key.png" alt="key">
+<p>The previous example looked a bit crowded inside its box. We can add to the width and height of the box by adding some keywords to the command:</p>
+<pre><code>set key top left box width 1 height 1
+</code></pre>
+<p>One problem with the key in all the previous examples was that the default length of line used was not long enough to make clear which dash pattern was intended. This can be adjusted by <code>samplen</code>:</p>
+<pre><code>set key top left box width 1 height 1 samplen 12
+</code></pre>
+<p>If you prefer the names to come after the curve samples, use the keyword <code>reverse</code>; this goes well with the <code>Left</code> keyword, which justifies the text to the left:</p>
+<pre><code>set key top left box width 1 height 1 reverse Left samplen 10
+</code></pre>
+<img src="img/key2.png" alt="key2">
+<p>If the number of keys is growing, you can use <code>maxrow</code> keyword to control the maximum amount of rows.</p>
+<h2 id="8-how-to-specify-color-schemes"><a class="header" href="#8-how-to-specify-color-schemes">8. How to specify color schemes?</a></h2>
+<p>This item, in fact, is a specific topic of <a href="#3-how-to-reuse-gnuplots-styles">How to reuse gnuplot's styles</a>, and here, we focus on <em>color schemes</em>. Readers can refer to <a href="https://personal.sron.nl/%7Epault/">Paul Tol's Notes</a> and <a href="https://stats.stackexchange.com/questions/118033/">&quot;Best&quot; series of colors to use for differentiating series in publication-quality</a> for more background knowledge. Color schemes are also discussed in <a href="../fundamental/color.html">Chapter 3</a>.</p>
+<blockquote>
+<p>This item is adapted from <a href="http://www.gnuplotting.org/color-maps-from-colorbrewer/">Color maps from colorbrewer</a>.</p>
+</blockquote>
+<p>If you are looking for nice color maps which are especially prepared to work with cartographic like plots you should have a look at colorbrewer2.org. Thanks to Anna Schneider there is an easy way to include them (at least the ones with eight colors each) into gnuplot. Just go to her <a href="https://github.com/aschn/gnuplot-colorbrewer">gnuplot-colorbrewer</a> github site and download the color maps.</p>
+<p><a href="https://juliagraphics.github.io/ColorSchemes.jl/stable/catalogue/">This website</a> provides a complete nice color scheme catalogue, and we can reuse them easily. For example, in order to use the <a href="https://jfly.uni-koeln.de/color/#pallet">colorblind palette</a> by Masataka Okabe and Kei Ito, I prepared a style file <code>okabe_ito.plt</code> (<code>color.gp</code>).</p>
+<pre><code>load 'obake_ito.plt'
+plot for [ii=1:8] f(x,ii) ls ii lw 2
+</code></pre>
+<img src="img/color.svg" width="60%">
+<h2 id="9-how-to-plot-discrete-function"><a class="header" href="#9-how-to-plot-discrete-function">9. How to plot discrete function?</a></h2>
+<p>Since gnuplot is Not a programming language, it lacks many useful features found in Python/R/Matlab. For example, to plot the histogram of flipping a coin until we see a head, the following code is written with Matplotlib:</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+p = 1/2
+n = np.arange(1,11)
+X = np.power(p,n)
+plt.bar(n,X)
+</code></pre>
+<img src="img/discrete.svg" width="80%">
+<p>When it comes to gnuplot, we can resort to <code>for</code> manually to plot a discrete function:</p>
+<pre><code>f(x) = 0.5**x
+array A[10]
+do for [i=1:10] {
+    A[i] = f(i)
+}
+plot A using 1:2 with boxes
+</code></pre>
+<p>The complete code can be found at <code>discrete.gp</code>. As for <em>array</em> in gnuplot,</p>
+<blockquote>
+<p>The name of an array can be used in a <code>plot</code>. This is equivalent to providing a file in which column 1 holds the array index (from 1 to size), column 2 holds the value of real(A[i]) and column 3 holds the value of imag(A[i]).</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../cook/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../fundamental/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../cook/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../fundamental/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_line_numbers = true;
+        </script>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

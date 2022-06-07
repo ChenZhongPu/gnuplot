@@ -1,0 +1,541 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Basic Usage - Gnuplot Port For Matplotlib</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ch1/index.html"><strong aria-hidden="true">1.</strong> Introductory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch1/basic_usage.html" class="active"><strong aria-hidden="true">1.1.</strong> Basic Usage</a></li><li class="chapter-item expanded "><a href="../ch1/tutorials.html"><strong aria-hidden="true">1.2.</strong> More Tutorials</a></li><li class="chapter-item expanded "><a href="../ch1/examples.html"><strong aria-hidden="true">1.3.</strong> More Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../cook/index.html"><strong aria-hidden="true">2.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cook/1_30.html"><strong aria-hidden="true">2.1.</strong> Item 1-30</a></li></ol></li><li class="chapter-item expanded "><a href="../fundamental/index.html"><strong aria-hidden="true">3.</strong> Fundamentals of Data Visualization</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fundamental/intro.html"><strong aria-hidden="true">3.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../fundamental/vizdata.html"><strong aria-hidden="true">3.2.</strong> Visualizing data: Mapping data onto aesthetics</a></li><li class="chapter-item expanded "><a href="../fundamental/coor.html"><strong aria-hidden="true">3.3.</strong> Coordinate systems and axes</a></li><li class="chapter-item expanded "><a href="../fundamental/color.html"><strong aria-hidden="true">3.4.</strong> Color scales</a></li><li class="chapter-item expanded "><a href="../fundamental/dirviz.html"><strong aria-hidden="true">3.5.</strong> Directory of visualizations</a></li><li class="chapter-item expanded "><a href="../fundamental/amounts.html"><strong aria-hidden="true">3.6.</strong> Visualizing amounts</a></li></ol></li><li class="chapter-item expanded "><a href="../apdx/index.html"><strong aria-hidden="true">4.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../apdx/abbre.html"><strong aria-hidden="true">4.1.</strong> Common Abbreviations</a></li><li class="chapter-item expanded "><a href="../apdx/time_format.html"><strong aria-hidden="true">4.2.</strong> Time Format</a></li><li class="chapter-item expanded "><a href="../apdx/greek.html"><strong aria-hidden="true">4.3.</strong> Greek Letters</a></li><li class="chapter-item expanded "><a href="../apdx/3d.html"><strong aria-hidden="true">4.4.</strong> 3D Data</a></li><li class="chapter-item expanded "><a href="../apdx/palette.html"><strong aria-hidden="true">4.5.</strong> Palettes</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Gnuplot Port For Matplotlib</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ChenZhongPu/gnuplot" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="basic-usage"><a class="header" href="#basic-usage">Basic Usage</a></h1>
+<p>This article is adapted from <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html">Basic Usage</a>.</p>
+<blockquote>
+<p>All scripts in this article can be found <code>script/basic_usage</code>.</p>
+</blockquote>
+<p>This tutorial covers some basic usage patterns and best practices to help you get started with gnuplot.</p>
+<p>Once gnuplot is installed, you can use it in either interactive or batch mode. As for the interactive, it can usually be invoked by issuing the <code>gnuplot</code> command at the shell prompt. Once launched, gnuplot displays a welcome message and then replaces the shell prompt with a <code>gnuplot&gt;</code> prompt. Anything entered at this prompt is interpreted as gnuplot commands until you issue an <code>exit</code> or <code>quit</code> command,</p>
+<p>Also, the scripts for plotting can be stored in a plain text file (usually suffixed with <code>.gp</code>), and it can be executed by </p>
+<pre><code class="language-sh">gunplot&gt; load &quot;&lt;file-name&gt;.gp&quot;
+</code></pre>
+<p>Note that both single quote and double quote are accepted.</p>
+<h2 id="a-simple-example"><a class="header" href="#a-simple-example">A simple example</a></h2>
+<p>The most important command in gnuplot is <code>plot</code>. To draw a line using several points:</p>
+<pre><code>$data &lt;&lt; EOD
+1 1
+2 4
+3 2
+4 3
+EOD
+plot $data with lines
+</code></pre>
+<p><img src="img/simple_example.svg" alt="simple_example" /></p>
+<p>As you can see, the default <em>style</em> of gnuplot is different from that of Matplotlib. For example,</p>
+<ul>
+<li>The line is thinner.</li>
+<li>The font of labels on axes is smaller.</li>
+<li>The legend is displayed.</li>
+<li>...</li>
+</ul>
+<p>Only a few extra commands are required to custom those styles. For example, <code>unset key</code> means &quot;<em>do not display the legend</em>&quot;. If you prefer to some style for your plotting, you can save these configs in a file for reuses. See more at <a href="../cook/1_30.html#3-how-to-reuse-gnuplots-styles">How to reuse gnuplot's styles</a>.</p>
+<h2 id="parts-of-a-figure"><a class="header" href="#parts-of-a-figure">Parts of a Figure</a></h2>
+<p>Here are the components of a gnuplot Figure.</p>
+<p><img src="img/anatomy.svg" alt="Anatomy of a figure" /></p>
+<p>The code for above can be found at <code>anatomy.gp</code>.</p>
+<h2 id="types-of-inputs-to-plotting-functions"><a class="header" href="#types-of-inputs-to-plotting-functions">Types of inputs to plotting functions</a></h2>
+<p>Plotting command (<code>plot</code>) expects a file or a mathematical function as the input. For example, the <code>plot sin(x)</code> is able to output a figure of <em>sin</em> whose default range of <em>x</em> is from -10 to 10. In practice, the input data is usually stored in a file.</p>
+<blockquote>
+<p>In my opinion, it is more common to <em>read</em> external data file for visualization tasks, and gnuplot's way to plotting is more ergonomic in practice, because we can separate data from plotting logics and will not concern about the <em>reading</em> step.</p>
+</blockquote>
+<p>To plot the scatter figure as shown <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#types-of-inputs-to-plotting-functions">here</a>, we can prepare the data containing coordinates, colors and sizes (stored in <code>data/scatter.dat</code>):</p>
+<pre><code># a(x) c(color) d(size) b(y)
+0	49	134.685132	-2.961981
+1	20	131.086051	4.801881
+2	44	51.744207	-6.497267
+3	20	1.665814	-11.207766
+</code></pre>
+<p>Those lines started with <code>#</code> are <em>comments</em> in gnuplot, and they are ignored in the input data and script file. And the following code (<code>scatter.gp</code>) can output the similar plot:</p>
+<pre><code>unset key
+set xlabel 'entry a'
+set ylabel 'entry b'
+set xrange [-5:55]
+
+plot 'scatter.dat' using 1:4:($3/30.0):2 \
+with points pt 22 ps variable lc variable
+</code></pre>
+<p>Note that the size (3rd column) generated is too large for gnuplot, so it is divided by 30. And we can add a backslash (<code>\</code>) to write the command in multiple lines. When using the keywords <code>pt</code> (short for <em>pointtype</em>), <code>ps</code> (short for <em>pointsize</em>), or <code>lc</code> (short for linecolor) in a plot
+command, the additional keyword <code>variable</code> may be given instead of a number.
+In this case the corresponding properties of each point are assigned by additional columns of input data.</p>
+<img src="img/scatter.svg" width="80%" alt="scatter">
+<h2 id="coding-styles"><a class="header" href="#coding-styles">Coding styles</a></h2>
+<p>As for gnuplot, there is only one style: <em>command</em>. To create the simple plot:</p>
+<pre><code>set title 'Simple Plot'
+set xrange [0:2]
+set xlabel 'x label'
+set ylabel 'y label'
+plot x t 'linear', x**2 t 'quadratic', x**3 t 'cubic'
+</code></pre>
+<img src="img/simple_plot.svg" width="80%" alt="simple plot">
+<p>Again, the default style of gnuplot may be not what you want. Here are some instructions about how to output an image like the one as shown <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#coding-styles">here</a>:</p>
+<ul>
+<li>X ticks step 0.5: <code>set xtics 0,0.25,2</code></li>
+<li>Y ticks step 2: <code>set ytics 0,2,8</code></li>
+<li>X ticks label with two digits: <code>set format x '%.2f'</code></li>
+<li>The position of legend: <code>set key box reverse Left left</code></li>
+<li>The size ratio: <code>set size ratio 2.7/5</code></li>
+</ul>
+<p>Because gnuplot always plots according to <code>xrange</code> if possible, we have to use a small trick to make some blank space. The main idea is to return invalid value for those space:</p>
+<pre><code>f(x) = (x &lt; 0 || x &gt; 2 ? 1/0 : x)
+</code></pre>
+<p>The final code (<code>simple_plot.pg</code>) would generate a figure like the following:</p>
+<img src="img/simple_plot2.svg" alt="final simple plot">
+<p>Wow, a ton of code is required to make the figure look pretty! The good news is that writing the scripts in gnuplot is like building with blocks, and everything here is straightforward; the bad news is that some default styles are a little annoying, and we have to <em>set</em> them manually.</p>
+<p>From now on, I will not apply the trick to make extra space in the X axis, because in my opinion, this is just an implementation choice. By the way, the figures shown in Matplotlib manual are generally scaled to 2.7/5, and we don't set the size ratio manually. If you want to learn how to scale the figure properly, please refer to <a href="../cook/1_30.html">Cookbook: Item 1</a>.</p>
+<h3 id="functions-and-styles"><a class="header" href="#functions-and-styles">Functions and styles</a></h3>
+<p>Gnuplot is <em>NOT</em> a programming language, so you cannot make a <em>helper</em> function to lessen your repeated workload. Fortunately, gnuplot has several features which can simplify the script. On the other hand, gnuplot offers mathematical style function definitions. For example, we can define a Gauss function in gnuplot:</p>
+<pre><code>gauss(x) = exp(-pi*x*x)
+</code></pre>
+<p>, where <code>exp</code> is the built-in logarithmic function and <code>pi</code> is the built-in constant for π.</p>
+<p>On the other hand, gnuplot can levitate our labors by <em>setting styles</em>. For example, suppose the plots for \( x \) and \( x^2 \) has the same style, then we can define a common style for them:</p>
+<pre><code>set style line 1 dt 2 lw 4 lc rgbcolor 'blue'
+plot x ls 1,x**2 ls 1
+</code></pre>
+<p>The detail of the usage of <em>styles</em> can be found at <a href="#styling-artists">Styling Artists</a>.</p>
+<h2 id="styling-artists"><a class="header" href="#styling-artists">Styling Artists</a></h2>
+<p>In the plot below we manually set the <em>linecolor</em>, <em>linewidth</em>, and <em>linetype</em> of a line.</p>
+<blockquote>
+<p>Experienced users of gnuplot like to use the abbreviations. For example, <code>lc</code> is short for <em>linecolor</em>, <code>lw</code> is short for <em>linewidth</em>, and <code>lt</code> is short of <em>linetype</em>. A complete list of the common used abbreviations can be found at <a href="../apdx/abbre.html">Appendix</a>.</p>
+</blockquote>
+<p>The data (<code>data/artists_data.data</code>) consists of two columns random numbers.</p>
+<pre><code>set style line 1 dt 2 lw 4 lc rgbcolor 'blue'
+set style line 2 dt 4 lw 2 lc rgbcolor 'orange'
+plot 'artists_data.dat' using 1 smooth cumulative ls 1, \
+'' using 2 smooth cumulative ls 2
+</code></pre>
+<img src="img/artists.svg" alt="styling artists" width="80%">
+<p>Let me elaborate on the usage. The fist line <code>set style line &lt;index&gt; &lt;some properties&gt;</code>, where <em>index</em> can be referred later. So what does the number of each property mean? In gnuplot, each number has its unique meaning, and you can check it by invoking the <code>test</code> command:</p>
+<img src="img/test.svg" alt="test">
+<p>As we can see, <code>dt 2</code> is short for <code>dashtype 2</code>, where <em>2</em> means <em>---</em>; <code>lw 4</code> is short for <code>linewidth 4</code>; <code>lc</code> is short for <code>linecolor</code>. In the code above, we use <code>lc rgbcolor &quot;blue&quot;</code> to specify a color, and we can also use a magic number, saying, <code>lc 30</code>, where <em>30</em> also means <em>blue</em>. Please check the long list carefully on the right side as illustrated in the figure above.</p>
+<p>The first parameter of <code>plot</code> is the file name, and <code>using 1</code> means selecting the first (<em>1st</em>) column. Generally speaking, when it comes to a 2D figure, we need to provide two columns, indicating X and Y respectively, and if only one column is given, then gnuplot considers it as Y, and X is implicit as the index number (starting from 0). To plot multiple lines, we separate them with a column (<em>,</em>), and we should not repeat the <code>plot</code> command again. We can specify the file name again, but it will be the previous one by default if it is an empty string (<em>&quot;&quot;</em> or <em>''</em>).</p>
+<p>One more thing, the option <code>smooth cumulative</code> is used to achieve the same effect as <code>np.cumsum()</code> does.</p>
+<h3 id="colors"><a class="header" href="#colors">Colors</a></h3>
+<p>Gnuplot has a very flexible array of colors that are accepted for most Artists, and users have multiple ways (including a number, an RGB name, and RGB hex value) to specify the colors. Some Artists will take multiple colors. i.e. for a circle plot, the edge of the markers can be different colors from the interior:</p>
+<pre><code>set style fill solid border lc 'black'
+plot '../data/artists_data.dat' using 1:2 with circles fc &quot;greenyellow&quot;
+</code></pre>
+<img src="img/colors.svg" alt="colors" width="80%">
+<p>The first line is to set the <em>fill style</em>, and 0.6 is the degree of transparency. Note that, <code>fc</code>, short for <em>fillcolor</em> only accepts a <em>colorspec</em>, and we cannot pass a plain number to it. You can check all color names by <code>show colornames</code> command.</p>
+<h3 id="linewidths-linestyles-and-pointsizes"><a class="header" href="#linewidths-linestyles-and-pointsizes">Linewidths, linestyles, and pointsizes</a></h3>
+<p>The line width and point size are multipliers for the current terminal's default width and size, so you'd better check the styles by invoking the <code>test</code> command. By the way, the concept of <code>MarkerStyle</code> in Matplotlib is called <em>pointtype</em> (the abbreviation form is <code>pt</code>) in gnuplot. For example, <code>pt 5</code> is a filled square.</p>
+<pre><code>plot '../data/artists_data.dat' using 1 with points pt 5 ps 2 lc 7 t 'data 1', \
+'' using 2 with points pt 11 ps 2 t 'data 2'
+</code></pre>
+<img src="img/marker.svg" alt="marker" width="80%">
+<blockquote>
+<p>There is no <em>pointcolor</em> in gnuplot! In order to set the color a point, you can use the <code>lc</code> (short for <em>linecolor</em>).</p>
+</blockquote>
+<h2 id="labelling-plots"><a class="header" href="#labelling-plots">Labelling plots</a></h2>
+<h3 id="axes-labels-and-text"><a class="header" href="#axes-labels-and-text">Axes labels and text</a></h3>
+<p><code>set xlabel</code>, <code>set ylabel</code>, and <code>set title</code> are used to add text in the indicated locations. Text can also be directly added to plots using <code>set label</code> command.</p>
+<p>First, we prepare a normal distribution dataset (<code>data/normal.dat</code>) using the Python code:</p>
+<pre><code class="language-python">mu, sigma = 115, 15
+x = mu + sigma * np.random.randn(10000)
+</code></pre>
+<pre><code>set title &quot;Aardvark lengths\n (not really)&quot;
+set xlabel 'Length [cm]'
+set ylabel 'Probability'
+set label &quot;{/Symbol m} = 115, {/Symbol s} = 15&quot; at 80,600
+unset key
+set xrange [55:175]
+set grid
+set style fill solid 0.75
+plot 'normal.dat' using 1 bins=50 with boxes fc '#4070a0'
+</code></pre>
+<img src="img/labels.svg" alt="labels" width="80%">
+<p>The complete code can be found at <code>labels.gp</code>. Note that you have to use double quotes for the escape character <code>\n</code>. The basic syntax of <code>set label</code> is: </p>
+<pre><code>set label {&lt;tag&gt;} {&quot;&lt;label text&gt;&quot;} {at &lt;position&gt;}
+</code></pre>
+<p>Here, the <code>position</code> is the location of X and Y on the plot in terms of the coordinates. To display the mathematical symbols, we use the special <code>{/Symbol}</code> font, where <code>m</code>, short for Greek letter <code>mu</code>, is \(\mu\), and <code>s</code>, short for Greek letter <code>sigma</code>, is \(\sigma\). Readers can refer to <a href="../apdx/greek.html">Greek Letters</a> for a complete list.</p>
+<p>We can further customize other properties such as <em>text size</em> and <em>text color</em>. For example, we use <code>font &quot;,15&quot;</code> to specify the size of font to 15 for the terminal.</p>
+<h3 id="using-mathematical-expressions-in-text"><a class="header" href="#using-mathematical-expressions-in-text">Using mathematical expressions in text</a></h3>
+<p>The <code>{/Symbol}</code> also supports simple mathematical notations, such as the subscript. For example <code>x^2</code> means \(x^2\), <code>{/Symbol s}_2</code> means \(\sigma_{2}\). However, it would be troublesome to write complex mathematical equations with <code>{/Symbol}</code>, and instead you should take the leverage of <em>Latex</em>. Readers can refer to <a href="../cook/1_30.html">How to write complex mathematical equations</a>.</p>
+<h3 id="annotations"><a class="header" href="#annotations">Annotations</a></h3>
+<p>We can also annotate points on a plot by using setting <em>arrow</em> and <em>label</em>:</p>
+<pre><code>f(x) = cos(2*pi*x)
+unset key
+set xrange [0:5]
+set yrange [-2:2]
+set samples 1000
+set arrow from 2.3,1.3 to 2,1 filled
+set label 'local max' at 2.3,1.3
+plot f(x)
+</code></pre>
+<img src="img/annotation.svg" alt="annotation" width="80%">
+<p>The basic usage an <em>arrow</em> is <code>set arrow from &lt;position&gt; to &lt;position&gt;</code>, and gnuplot offers a large amount of options to customize its styles, such as its head, fill style, and border. For example, as for the fill style, you can use one from <code>filled | empty | nofilled | noborder</code>. Like the <em>label</em>, <code>position</code> here means the X,Y coordinate on the plot.</p>
+<blockquote>
+<p>Like many other Linux tools, gnuplot is shipped with a detailed documentation, and users can invoke <code>help &lt;command&gt;</code> to ask for help. For example, you can access gnuplot’s built-in reference documentation about how to set arrow by typing <code>help set arrow</code>.</p>
+</blockquote>
+<h3 id="keys"><a class="header" href="#keys">Keys</a></h3>
+<p>The concept <em>legend</em> in Matplotlib is called <em>key</em> in gnuplot.</p>
+<pre><code>plot 'artists_data.dat' using 1 with lines t 'data1', \
+'' using 2 with lines t 'data2'
+</code></pre>
+<img src="img/key.svg" alt="key" width="80%">
+<p>The keys are specified by <code>t</code> (short for <em>title</em>). Keys in gnuplot are quite flexible in layout and placement.</p>
+<h2 id="axis-scales-and-ticks"><a class="header" href="#axis-scales-and-ticks">Axis scales and ticks</a></h2>
+<p>Each Axes has two (or three) axis representing the x- and y-axis. These control the scale of the axis, the tick locators and the tick formatters.</p>
+<h3 id="scale"><a class="header" href="#scale">Scale</a></h3>
+<p>In addition to the linear scale, gnuplot supplies non-linear scales, such as a log-scale. Here we set the scale manually:</p>
+<pre><code>set multiplot layout 1,2
+unset key
+f(x) = 10**x
+unset logscale y
+plot 'artists_data.dat' using (f($2)) with lines
+set logscale y
+plot 'artists_data.dat' using (f($2)) with lines
+</code></pre>
+<img src="img/scale.svg" alt="scale" width="70%">
+<p>The first line is to set a multiplot mode with 1 row and 2 columns. Some readers may be not satisfied with formatting of labels in <code>log-scale</code>, and prefer the \( 10^i \) format. To achieve this, we can specify the format as <em>log</em>:</p>
+<pre><code>set format y &quot;10^{%L}&quot;
+</code></pre>
+<p>The complete code can be found at <code>scales.gp</code>.</p>
+<img src="img/scale2.svg" alt="scale2" width="70%">
+<p>The scale sets the mapping from data values to spacing along the Axis, so it is also possible to set <em>log scale</em> for X.</p>
+<h3 id="tick-locators-and-formatters"><a class="header" href="#tick-locators-and-formatters">Tick locators and formatters</a></h3>
+<p>Each Axis has a tick locator and formatter that choose where along the Axis objects to put tick marks. A simple interface to this is <code>set xtics</code> (Of course, we can also use <code>set ytics</code> to custom the ticks of Y).</p>
+<pre><code>set multiplot layout 2,1
+unset key
+
+set title 'Automatic ticks'
+plot 'artists_data.dat' using 2 with lines
+
+set title 'Manual ticks'
+set ytics -1.5,1.5,1.5
+set xtics (&quot;zero&quot; 0, &quot;30&quot; 30, &quot;sixty&quot; 60, &quot;90&quot; 90)
+plot 'artists_data.dat' using 2 with lines
+</code></pre>
+<img src="img/ticks.svg" alt="ticks" width="80%">
+<p>The code above shows two basic usages of <code>set xtics</code> (<code>set ytics</code>) command.</p>
+<pre><code>set xtics &lt;start&gt;, &lt;incr&gt; {,&lt;end&gt;}
+set xtics ({&quot;&lt;label&gt;&quot;} &lt;pos&gt; {&lt;level&gt;} {,{&quot;&lt;label&gt;&quot;}...)
+</code></pre>
+<p>So <code>set ytics -1.5,1.5,1.5</code> means the tic starts from -1.5, and ends to 1.5, and the step is 1.5 (always positive). As for the second usage, the default level is 0, indicting the major tick, and level 1 means the minor tick. So <code>&quot;zero&quot; 0</code> means to display <em>zero</em> at position 0.</p>
+<p>By the way, the ticks in gnuplot are drawn <em>inwards</em>, and we can use <code>out</code> to set it be <em>outwards</em>.</p>
+<pre><code>unset key
+set tics out nomirror
+plot 'artists_data.dat' using 2 with lines
+</code></pre>
+<img src="img/outwards.svg" alt="outwards" width="80%">
+<p>As for <code>tics</code>, it's default option <code>mirror</code> tells gnuplot to put unlabeled tics at the same positions on the opposite border, and <code>nomirror</code> does what you think it does.</p>
+<h3 id="plotting-dates-and-strings"><a class="header" href="#plotting-dates-and-strings">Plotting dates and strings</a></h3>
+<p>Gnuplot can handle plotting arrays of dates and arrays of strings, as well as floating point numbers. These get special locators and formatters as appropriate. </p>
+<p>For dates, gnuplot offers a set of command for processing <em>time series</em> data. The classic approach uses <code>set _data</code>, <code>set timefmt</code> and <code>set _tics format</code>, which let you parse and arbitrary data/time information. This is gnuplot’s most flexible and powerful method of handling timestamps.</p>
+<p>The dataset can be found <code>data/date.dat</code>, which is generated by <code>numpy</code>.</p>
+<pre><code>2021-11-15 00:00:00   0.047934
+2021-11-15 01:00:00   0.811732
+2021-11-15 02:00:00    2.66169
+...
+</code></pre>
+<pre><code>unset key
+set xdata time
+set timefmt &quot;%Y-%m-%d %H:%M:%S&quot;
+set xtics format &quot;%m-%d&quot;
+plot &quot;date.dat&quot; u 1:3 w lines lw 1.5
+</code></pre>
+<img src="img/date.svg" alt="date" width="80%">
+<p>The second line <code>set xdata time</code> is to set the data on X as <em>time</em>. The third line <code>set timefmt &lt;format string&gt;</code> is to specify the time format, where <code>%Y</code> means a 4-digit year, <code>%m</code> means month, <code>%d</code> means a day of a month, <code>%H</code> means an hour, <code>%M</code> means the minute. You can use <code>help set timefmt</code> to have a look at the document. The fourth line is to set the format of the tics on X, <code>%m-%d</code> means the month and day are displayed.</p>
+<blockquote>
+<p>Note that the supported format strings for <code>set timefmt</code> and <code>set xtics format</code> are not always the same. For example, <code>%F</code> is a shorthand for <code>%H:%M:%S</code>, and it is only available for <code>set _tics format</code>. Readers can refer to <a href="../apdx/time_format.html">Time Format</a> for details.</p>
+</blockquote>
+<p>For strings, we get categorical plotting. We prepared a dataset at <code>data/strings.dat</code>:</p>
+<pre><code>turnips 0.4
+rutabaga 0.42
+cucumber 0.57
+pumpkins 0.44
+</code></pre>
+<pre><code>unset key
+set yrange [0:0.6]
+set ytics 0,0.1,0.6
+set xrange [-1:4]
+set style fill solid 0.5
+set boxwidth 0.8
+plot &quot;strings.dat&quot; using 2:xticlabels(1) with boxes
+</code></pre>
+<img src="img/strings.svg" alt="strings" width="80%">
+<p>Here we are using <code>boxes</code>, and it is also possible to plot this using histograms. But histograms are mainly used to plot multi-group data (see more at <a href="examples.html#revisit-bar-chart">Revisit bar chart</a>).</p>
+<p>As for a 2D <em>box</em> plotting, only one dimension is required, and we can use an extra column to be the ticks labels. So <code>2:xticlabels(1)</code> means plotting with the second (2nd) column and its first (1st) column is used as ticks labels on X. By default, each box extends to touch the adjacent boxes (in other words, width is 1), and <code>set boxwidth</code> is to set its width.</p>
+<h2 id="additional-axis-objects"><a class="header" href="#additional-axis-objects">Additional Axis objects</a></h2>
+<p>Plotting data of different magnitude in one chart may require an additional y-axis. As for a 2D figure in gnuplot, we are, in fact, plotting on <em>X1</em> (bottom) and <em>Y1</em> (left). The mirror of X1 is <em>X2</em>, which is located on the top, and the mirror of Y1 is <em>Y2</em>, which is located on the right side. Therefore, each axis can have a different scale and tick format in gnuplot.</p>
+<pre><code>f1(x) = 500 * x
+f2(x) = cos(2 * pi * x)
+set xrange [0:5]
+set samples 1200
+plot f2(x) w lines axis x1y1 lw 2 t 'Sine(left)', f1(x) w lines axis x1y2 lw 2 t 'Staight(right)'
+</code></pre>
+<img src="img/y_axis.svg" alt="y_axis" width="80%">
+<p>Here <code>axis x1y1</code> means plotting on X1 and Y1, while <code>axis x1y2</code> means plotting on X1 and Y2. And we can also set the ticks labels on X2 via <code>set x2label</code>:</p>
+<pre><code>f(x) = cos(2 * pi * x)
+set link x2 via x*180/pi inverse x*pi/180
+set x2tics 0,50,300
+set xtics nomirror
+set xrange [0:5]
+set samples 1200
+set xlabel 'Angle [°]'
+set x2label 'Angle [rad]'
+plot f(x) w lines axis x1y1 lw 2
+</code></pre>
+<img src="img/x_axis.svg" alt="x_axis" width="80%">
+<p>Note that the <code>set link</code> command is introduced by gnuplot 5.0, which is used to establish a mapping between the x and x2 axes, or the y and y2 axes.</p>
+<h2 id="color-mapped-data"><a class="header" href="#color-mapped-data">Color mapped data</a></h2>
+<p>Often we would like a color map. Gnuplot has a number of plot types that do this. Since color maps are based on 3D data, we need to understand the 3D data format in gnuplot (see more at <a href="../apdx/3d.html">3D Data</a>). Here we use data (<code>data/z.txt</code>) which is generated by Python in the <em>matrix</em> format:</p>
+<pre><code>unset key
+set xrange [0:128]
+set yrange [0:128]
+set cbrange [-1:1]
+set cbtics scale 0
+set palette defined (-1 'blue', 0 'white', 1 'red')
+set tics nomirror out
+plot 'z.txt' matrix with image
+</code></pre>
+<img src="img/map1.svg" alt="map1" width="80%">
+<p><em>Palettes</em> are very flexible in gnuplot, and you can refer to <a href="../apdx/palette.html">Palettes</a> for more details. Here we use <code>set palette defined</code> to define some colors at specific points; <code>set cbrange</code> (<em>cb</em> is short for <em>color range</em>) command sets the range of values which are colored using the current <code>palette</code>. The <code>set cbtics</code> command controls major (labeled) tics on the color box axis, and the option <code>scale 0</code> means no tics.</p>
+<p>To draw a contour, we can use <code>set table</code> to output its contour (<code>cont.gp</code>):</p>
+<pre><code>set contour base 
+unset surface
+set table 'cont.dat'
+splot 'z.txt' matrix
+</code></pre>
+<p><code>splot</code> is the command for drawing 3D plots. Then e can draw the contour and the data at the same time:</p>
+<pre><code>unset key
+set xrange [0:128]
+set yrange [0:128]
+set cbrange [-1:1]
+set cbtics scale 0
+plot '../../data/z.txt' matrix with image, '../../data/cont.dat' with lines lw 1.5
+</code></pre>
+<img src="img/map2.svg" alt="map2" width="80%">
+<p>Here, we use the default palette in gnuplot, and you can check how it looks like by invoking <code>test palette</code> command.</p>
+<p>The last example is to plot a scatter with color:</p>
+<pre><code>set palette defined ( 0 'blue', 1 'grey', 2 'red' )
+plot &quot;cloud&quot; u 1:2:3 palette pt 7 ps 2
+</code></pre>
+<img src="img/scatter_color.svg" alt="scatter color" width="80%">
+<p>As for <code>data/cloud</code>, its first two columns determine the location of each point, and the third column is used to find the point’s color by mapping the numeric value into the provided palette. The color of each point or line segment is found by mapping the values of an additional data column into the palette, using the keyword <code>palette</code> in the <code>plot</code> command.</p>
+<h2 id="working-with-multiple-figures-and-axes"><a class="header" href="#working-with-multiple-figures-and-axes">Working with multiple Figures and Axes</a></h2>
+<p>We have shown the usage of <code>set multiplot layout</code>, and we provide one more example (<code>multi.pg</code>), which is from <a href="http://gnuplot.sourceforge.net/demo/layout.html">gnuplot demo script: layout.dem</a>:</p>
+<img src="img/multi.svg" alt="multi" width="80%">
+<p>Note that for academical papers, multiple figures are mainly plotted with <em>subfigure</em> in <em>Latex</em>, so we do not think it is worthwhile to explore this feature in gnuplot.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../ch1/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../ch1/tutorials.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../ch1/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../ch1/tutorials.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_line_numbers = true;
+        </script>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
